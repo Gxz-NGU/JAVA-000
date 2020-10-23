@@ -1,0 +1,114 @@
+Classfile /E:/workspace/JAVA-000/Week_01/Hello.class
+  Last modified 2020-10-21; size 546 bytes
+  MD5 checksum f6ee18232d3351a6370e562ff2e53722
+  Compiled from "Hello.java"
+public class Hello
+  minor version: 0
+  major version: 52
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+   #1 = Methodref          #9.#19         // java/lang/Object."<init>":()V
+   #2 = Double             0.5d
+   #4 = Fieldref           #20.#21        // java/lang/System.out:Ljava/io/PrintStream;
+   #5 = String             #22            // c > 1
+   #6 = Methodref          #23.#24        // java/io/PrintStream.println:(Ljava/lang/String;)V
+   #7 = String             #25            // c < 1
+   #8 = Class              #26            // Hello
+   #9 = Class              #27            // java/lang/Object
+  #10 = Utf8               <init>
+  #11 = Utf8               ()V
+  #12 = Utf8               Code
+  #13 = Utf8               LineNumberTable
+  #14 = Utf8               main
+  #15 = Utf8               ([Ljava/lang/String;)V
+  #16 = Utf8               StackMapTable
+  #17 = Utf8               SourceFile
+  #18 = Utf8               Hello.java
+  #19 = NameAndType        #10:#11        // "<init>":()V
+  #20 = Class              #28            // java/lang/System
+  #21 = NameAndType        #29:#30        // out:Ljava/io/PrintStream;
+  #22 = Utf8               c > 1
+  #23 = Class              #31            // java/io/PrintStream
+  #24 = NameAndType        #32:#33        // println:(Ljava/lang/String;)V
+  #25 = Utf8               c < 1
+  #26 = Utf8               Hello
+  #27 = Utf8               java/lang/Object
+  #28 = Utf8               java/lang/System
+  #29 = Utf8               out
+  #30 = Utf8               Ljava/io/PrintStream;
+  #31 = Utf8               java/io/PrintStream
+  #32 = Utf8               println
+  #33 = Utf8               (Ljava/lang/String;)V
+{
+  public Hello();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+      LineNumberTable:
+        line 1: 0
+
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=6, locals=6, args_size=1
+         0: iconst_1
+         1: istore_1
+         2: iconst_2
+         3: istore_2
+         4: iload_1
+         5: i2d
+         6: iload_2
+         7: i2d
+         8: ldc2_w        #2                  // double 0.5d
+        11: dmul
+        12: dadd
+        13: dstore_3
+        14: dload_3
+        15: dconst_1
+        16: dcmpl
+        17: ifle          31
+        20: getstatic     #4                  // Field java/lang/System.out:Ljava/io/PrintStream;
+        23: ldc           #5                  // String c > 1
+        25: invokevirtual #6                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+        28: goto          39
+        31: getstatic     #4                  // Field java/lang/System.out:Ljava/io/PrintStream;
+        34: ldc           #7                  // String c < 1
+        36: invokevirtual #6                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+        39: iconst_0
+        40: istore        5
+        42: iload         5
+        44: bipush        10
+        46: if_icmpge     59
+        49: iload         5
+        51: i2d
+        52: dstore_3
+        53: iinc          5, 1
+        56: goto          42
+        59: return
+      LineNumberTable:
+        line 3: 0
+        line 4: 2
+        line 5: 4
+        line 6: 14
+        line 7: 31
+        line 8: 39
+        line 9: 49
+        line 8: 53
+        line 11: 59
+      StackMapTable: number_of_entries = 4
+        frame_type = 254 /* append */
+          offset_delta = 31
+          locals = [ int, int, double ]
+        frame_type = 7 /* same */
+        frame_type = 252 /* append */
+          offset_delta = 2
+          locals = [ int ]
+        frame_type = 250 /* chop */
+          offset_delta = 16
+}
+SourceFile: "Hello.java"
