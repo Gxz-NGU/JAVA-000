@@ -33,6 +33,7 @@ public class OkhttpOutboundHandler {
     private void fetchGet(final FullHttpRequest inbound, final ChannelHandlerContext ctx, final String url) {
         Request request =new Request.Builder().url(url).build();
         try ( Response response = okHttpClient.newCall(request).execute()) {
+            // 这里的response.body().string(),因为用一次就会把里面的流清空
 //            System.out.println(response.body().string());
             handleResponse(inbound,ctx,response);
         } catch (IOException e) {
@@ -58,21 +59,6 @@ public class OkhttpOutboundHandler {
             }
             ctx.flush();
         }
-    }
-
-    public static void main(String[] args) {
-        Request request =new Request.Builder().url("http://localhost:8088/api/hello").build();
-        OkHttpClient okHttpClient = new OkHttpClient();
-        try {
-
-            Response response1 = okHttpClient.newCall(request).execute();
-//            System.out.println(response1.body().string());
-            FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1,OK,Unpooled.wrappedBuffer(response1.body().bytes()));
-            System.out.println(response);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
 }
