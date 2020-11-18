@@ -1,3 +1,248 @@
+作业说明：分别用CompletableFuture、Future、FutureTask、CountDownLatch、CyclicBarrier、Semaphore实现了建一个线程，然后返回结果
+
+## 有个疑问还望助教解答一下：
+
+1. 我这思路对么？
+2. 老师课上说有10种，请问还有哪些我没想到的吗？
+
+## 为了助教方便查看，我还是把代码贴一下：
+
+1. 使用CountDownLatch
+
+   ```java
+   import java.util.concurrent.CountDownLatch;
+   
+   /**
+    * 本周作业：（必做）思考有多少种方式，在main函数启动一个新线程或线程池，
+    * 异步运行一个方法，拿到这个方法的返回值后，退出主线程？
+    * 写出你的方法，越多越好，提交到github。
+    *
+    * 一个简单的代码参考：
+    */
+   public class CountDownLatchMethod {
+       
+       public static void main(String[] args) throws InterruptedException {
+   
+           long start=System.currentTimeMillis();
+           // 在这里创建一个线程或线程池，
+   
+           final CountDownLatch latch = new CountDownLatch(1);
+   
+           final int[] result = {0};
+           new Thread(new Runnable() {
+               public void run() {
+                   try{
+                       // 异步执行 下面方法
+                       result[0] = Fibo.sum(); //这是得到的返回值
+                   }finally {
+                       latch.countDown();
+                   }
+               }
+           }).start();
+   
+   
+           latch.await(); // 确保执行完一个任务之后
+           // 确保  拿到result 并输出
+           System.out.println("异步计算结果为："+ result[0]);
+            
+           System.out.println("使用时间："+ (System.currentTimeMillis()-start) + " ms");
+           
+           // 然后退出main线程
+       }
+   
+   }
+   
+   ```
+
+2. 使用CyclicBarrier
+
+   ```java
+   import java.util.concurrent.BrokenBarrierException;
+   import java.util.concurrent.CyclicBarrier;
+   
+   /**
+    * 本周作业：（必做）思考有多少种方式，在main函数启动一个新线程或线程池，
+    * 异步运行一个方法，拿到这个方法的返回值后，退出主线程？
+    * 写出你的方法，越多越好，提交到github。
+    *
+    * 一个简单的代码参考：
+    */
+   public class CyclicBarrierMethod {
+       
+       public static void main(String[] args) throws InterruptedException {
+   
+           long start=System.currentTimeMillis();
+           final int[] result = {0};
+           // 在这里创建一个线程或线程池，
+   
+           // 这里为了传参特意声明了一个MyThread
+           final CyclicBarrier cyclicBarrier = new CyclicBarrier(1,new MyThread(start,result));
+   
+   
+           new Thread(new Runnable() {
+               public void run() {
+                   try{
+                       // 异步执行 下面方法
+                       result[0] = Fibo.sum(); //这是得到的返回值
+                       cyclicBarrier.await();
+                   } catch (InterruptedException e) {
+                       e.printStackTrace();
+                   } catch (BrokenBarrierException e) {
+                       e.printStackTrace();
+                   }
+               }
+           }).start();
+   
+   
+           
+           // 然后退出main线程
+       }
+   
+   }
+   class MyThread implements Runnable {
+   
+       private Long start;
+   
+       private int[] result;
+   
+       public MyThread(Long start, int[] result){
+           this.start = start;
+           this.result = result;
+       }
+   
+       public void run() {
+           // 确保  拿到result 并输出
+           System.out.println("异步计算结果为："+ result[0]);
+   
+           System.out.println("使用时间："+ (System.currentTimeMillis()-start) + " ms");
+           System.out.println("该完成的任务已经完成");
+       }
+   }
+   ```
+
+3. 使用Semaphore
+
+   ```java
+   import java.util.concurrent.Semaphore;
+   
+   /**
+    * 一个工人，有一台机器
+    */
+   public class SemaphoreMethod {
+       public static void main(String[] args) throws InterruptedException {
+   
+           final long start=System.currentTimeMillis();
+           // 在这里创建一个线程或线程池，
+   
+           int N = 1; // 一个工人
+   
+           final Semaphore semaphore = new Semaphore(1);
+   
+           final int[] result = {0};
+           new Thread(new Runnable() {
+               public void run() {
+                   try {
+                       semaphore.acquire();
+                       // 异步执行 下面方法
+                       result[0] = Fibo.sum(); //这是得到的返回值
+                       // 确保  拿到result 并输出
+                       System.out.println("异步计算结果为："+ result[0]);
+   
+                       System.out.println("使用时间："+ (System.currentTimeMillis()-start) + " ms");
+   
+                   } catch (InterruptedException e) {
+                       e.printStackTrace();
+                   } finally {
+                       semaphore.release();
+                   }
+               }
+           }).start();
+   
+   
+   
+   
+           // 然后退出main线程
+       }
+   
+   }
+   ```
+
+4. Future
+
+   ```java
+   import java.util.concurrent.*;
+   
+   /**
+    * 使用Future+线程池的方式实现返回值
+    */
+   public class FutureMethod {
+       public static void main(String[] args) throws ExecutionException, InterruptedException {
+           final long start=System.currentTimeMillis();
+           ExecutorService executor = Executors.newCachedThreadPool();
+           Future<Integer> result = executor.submit(new Callable<Integer>() {
+               public Integer call() throws Exception {
+                   return Fibo.sum();
+               }
+           });
+           executor.shutdown();
+   
+           System.out.println("异步计算结果为："+ result.get());
+   
+           System.out.println("使用时间："+ (System.currentTimeMillis()-start) + " ms");
+       }
+   }
+   
+   ```
+
+5. FutureTask
+
+   ```java
+   import java.util.concurrent.Callable;
+   import java.util.concurrent.ExecutionException;
+   import java.util.concurrent.FutureTask;
+   
+   /**
+    * 使用FutureTask + 线程的方式
+    */
+   public class FutureTaskMethod {
+       public static void main(String[] args) throws ExecutionException, InterruptedException {
+           long start = System.currentTimeMillis();
+           // 因为FutureTask可以直接放在线程里面
+           FutureTask<Integer> task  = new FutureTask<Integer>(new Callable<Integer>() {
+               public Integer call() throws Exception {
+                   return Fibo.sum();
+               }
+           });
+           new Thread(task).start();
+   
+           System.out.println("异步计算结果为："+ task.get());
+   
+           System.out.println("使用时间："+ (System.currentTimeMillis()-start) + " ms");
+       }
+   }
+   ```
+
+6. CompletableFuture
+
+   ```java
+   import java.util.concurrent.CompletableFuture;
+   import java.util.concurrent.ExecutionException;
+   
+   /**
+    * 使用CompletableFuture
+    */
+   public class CompletableFutureMethod {
+       public static void main(String[] args) throws ExecutionException, InterruptedException {
+           long start = System.currentTimeMillis();
+           Integer result = CompletableFuture.supplyAsync(()->{return Fibo.sum();}).get();
+           System.out.println("异步计算结果为："+ result);
+   
+           System.out.println("使用时间："+ (System.currentTimeMillis()-start) + " ms");
+       }
+   }
+   
+   ```
+
 学习笔记
 
 java并发包 juc？
