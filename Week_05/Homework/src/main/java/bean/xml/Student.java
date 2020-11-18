@@ -1,4 +1,4 @@
-package xml;
+package bean.xml;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

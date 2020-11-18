@@ -1,4 +1,4 @@
-package javaconfig;
+package bean.javaconfig;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

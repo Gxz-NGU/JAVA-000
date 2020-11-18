@@ -1,7 +1,6 @@
 学习笔记
 
 
-
 ### Instrumentation
 
 完全不侵入jar包，Javaagent，在类加载之前改变它，而且javaagent不与待拦截的类打包在一起。
@@ -45,3 +44,16 @@ application.yaml - configuration- Bean
 
 ### 为何要约定大于配置？
 
+## Spring FX
+
+### IOC——使用的DI方法
+
+两个类没有关系，靠Spring搞他们互相依赖的关系。
+
+分散在两个项目的类的属性循环依赖问题spring可以解决，构造函数内的循环依赖无法解决。
+
+### AOP
+
+在类上添加新的能力。通过拦截方法调用来做增强的。
+
+用了接口的类，使用的是动态代理。没有接口，直接的类就是用的CGLib
