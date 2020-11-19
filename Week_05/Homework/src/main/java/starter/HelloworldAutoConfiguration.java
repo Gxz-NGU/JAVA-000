@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConditionalOnClass({HelloworldService.class})
 @EnableConfigurationProperties(HelloworldPropertities.class)
-public class HelloworldAutoConfiguration {
+public class    HelloworldAutoConfiguration {
     @Autowired
     private HelloworldPropertities helloworldPropertities;
 

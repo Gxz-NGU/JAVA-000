@@ -1,12 +1,2 @@
-starter/HelloworldAutoConfiguration.class
-bean/javaconfig/Student.class
-starter/SchoolPropertities.class
-bean/auto/AutoWireExample.class
-bean/xml/Student.class
-bean/javaconfig/Config.class
-starter/HelloworldService.class
-starter/Student.class
-starter/HelloworldPropertities.class
-bean/auto/Config.class
-starter/Klass.class
-starter/School.class
+starter\SchoolAutoConfiguration.class
+starter\SchoolService.class

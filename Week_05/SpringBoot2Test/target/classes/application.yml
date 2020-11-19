@@ -1,0 +1,51 @@
+server:
+  port: 8000
+  servlet:
+    context-path: /
+    context-parameters:
+      confPath: E:\workspace\10.248.50.200git\blockchain-roaming\roaming-block-server\src\main\resource\
+
+
+spring:
+  application:
+    # 程序的名称
+    name: block-server
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+    password: 123456
+    timeout: 500ms # 连接超时时间（毫秒）
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+#    cluster:
+#      nodes:
+#        - 192.168.9.123:6379
+#        - 192.168.9.123:6380
+#        - 192.168.9.123:6381
+#        - 192.168.9.123:6382
+#        - 192.168.9.123:6383
+#        - 192.168.9.123:6384
+
+ipfs:
+  node: /ip4/192.168.9.124/tcp/5001
+  url: http://192.168.9.124:8080/ipfs/
+
+helloworld:
+  words: xiaofeiyang
+
+school:
+  ids:
+    - 1
+    - 2
+    - 3
+  names:
+    - gxz
+    - yy
+    - xiaofeiyang
+  studentId: 111
+  studentName: dafeiyang

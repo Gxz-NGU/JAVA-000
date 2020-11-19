@@ -1,4 +1,4 @@
-bean/auto/AutoWireTest.class
-bean/xml/TestXml.class
-starter/TestHelloworldService.class
-bean/javaconfig/TestJavaConfig.class
+bean\xml\TestXml.class
+bean\auto\AutoWireTest.class
+bean\javaconfig\TestJavaConfig.class
+starter\TestHelloworldService.class
